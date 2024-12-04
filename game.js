@@ -88,6 +88,10 @@ const scenarios = [
 
 // Function to start the game
 function startGame() {
+    // Reset the progress bar to 0% at the start
+    const progressBar = document.getElementById('progress-bar');
+    progressBar.value = 0;
+
     document.getElementById('story-text').textContent = scenarios[currentScenario].story;
     displayChoices(scenarios[currentScenario].choices);
     updateProgress();
@@ -96,7 +100,7 @@ function startGame() {
 // Function to display choices
 function displayChoices(choices) {
     const choicesContainer = document.getElementById('choices-container');
-    choicesContainer.innerHTML = ''; // Clear previous choices
+    choicesContainer.innerHTML = '';  // Clear previous choices
 
     choices.forEach((choice, index) => {
         const button = document.createElement('button');
@@ -125,7 +129,8 @@ function makeChoice(choiceIndex, isCorrect, feedback) {
         }
     } else {
         alert(feedback + " Try again.");
-        startGame(); // Retry the same scenario
+        // Retry the same scenario
+        displayChoices(scenarios[currentScenario].choices);
     }
 }
 
