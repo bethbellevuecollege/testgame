@@ -86,6 +86,7 @@ function makeChoice(choiceIndex, isCorrect, feedback) {
         }
     } else {
         alert("Incorrect. " + feedback + " Try again.");
+        // No need to change currentScenario to ensure the same scenario is presented again
         startGame(); // Retry the same scenario
     }
 }
