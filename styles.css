@@ -1,59 +1,66 @@
+/* Basic styling for the page */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-#game-container {
-    width: 60%;
-    max-width: 600px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
     text-align: center;
-    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-#progress-container {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-progress {
+/* Path container (representing the ground/path for the character) */
+#path-container {
+    position: relative;
     width: 100%;
-    height: 20px;
+    height: 150px;
+    background-color: #c2f0c2; /* Light green to represent the ground */
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden; /* Ensure elements don't overflow the path container */
 }
 
-#story-container {
-    margin-bottom: 20px;
+/* Character style */
+#character {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    background-color: blue; /* Blue circle representing the character */
+    border-radius: 50%;
+    transition: left 1s ease-out; /* Smooth movement of the character */
 }
 
-#choices-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+/* Creature (obstacle) style */
+.creature {
+    position: absolute;
+    bottom: 10px;
+    width: 50px;
+    height: 50px;
+    background-color: red; /* Red circle representing the creature */
+    border-radius: 50%;
+    transition: opacity 1s ease-out;
 }
 
-button.choice {
-    padding: 10px;
-    background-color: #3498db;
-    color: #fff;
+/* Story text styling */
+#story-text {
+    font-size: 18px;
+    margin: 20px 0;
+    text-align: center;
+    color: #333;
+}
+
+/* Choices container styling */
+.choices-container button {
+    font-size: 18px;
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
 }
 
-button.choice:hover {
-    background-color: #2980b9;
+.choices-container button:hover {
+    background-color: #45a049;
 }
