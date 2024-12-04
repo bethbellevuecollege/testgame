@@ -50,6 +50,7 @@ const scenarios = [
 function startGame() {
     document.getElementById('story-text').textContent = scenarios[currentScenario].story;
     displayChoices(scenarios[currentScenario].choices);
+    updateProgress();
 }
 
 // Function to display choices
@@ -64,6 +65,13 @@ function displayChoices(choices) {
         button.onclick = () => makeChoice(index, choice.correct, choice.feedback);
         choicesContainer.appendChild(button);
     });
+}
+
+// Update progress bar
+function updateProgress() {
+    const progressBar = document.getElementById('progress-bar');
+    const progress = ((currentScenario + 1) / scenarios.length) * 100;
+    progressBar.value = progress;
 }
 
 // Handle player's choice
