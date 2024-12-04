@@ -56,7 +56,7 @@ function handleAnswer(isCorrect, scenario, answerText) {
     itemsCollected.push(scenario.item); // Add item to collected items
     currentScenario++; // Move to the next scenario
 
-    // Update the inventory
+    // Update the inventory immediately after the correct answer
     document.getElementById("inventory").innerHTML = "Items Collected: " + itemsCollected.join(', ');
 
     // Check if the game is over
@@ -89,7 +89,6 @@ function respawnGame() {
   document.getElementById("hit-points").innerHTML = "Hit Points: " + hitPoints;
   document.getElementById("inventory").innerHTML = "Items Collected: None";
   document.getElementById("respawn-container").style.display = "none";
-  document.getElementById("feedback").innerHTML = "You've respawned with full health!";
   loadScenario(); // Reload the first scenario
 }
 
@@ -98,9 +97,15 @@ function endGame() {
   document.getElementById("game-play").style.display = "none";
   document.getElementById("end-game-message").style.display = "block";
   
-  // Display the items collected
-  const itemsList = document.getElementById("items-collected-list");
-  itemsList.innerHTML = itemsCollected.map(item => `<li>${item}</li>`).join('');
+  // Display the items collected and award the title
+  document.getElementById("end-game-message").innerHTML = `
+    <h2>Congratulations, ${playerName}! You defeated the End Boss!</h2>
+    <p>Items Collected:</p>
+    <ul>
+      ${itemsCollected.map(item => `<li>${item}</li>`).join('')}
+    </ul>
+    <p>You have earned the title of IT Technician Tier 2!</p>
+  `;
 }
 
 // List of all scenarios
