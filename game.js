@@ -51,8 +51,8 @@ function displayChoices(choices) {
 function updateProgress() {
     const progressBar = document.getElementById('progress-bar');
     // Calculate progress based on current scenario and total scenarios
-    const progress = ((currentScenario + 1) / scenarios.length) * 100;
-    progressBar.value = progress;
+    const progress = ((currentScenario) / scenarios.length) * 100;
+    progressBar.value = progress;  // Update progress bar after answering each question
 }
 
 // Handle player's choice
