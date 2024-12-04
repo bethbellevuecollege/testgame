@@ -56,9 +56,6 @@ function handleAnswer(isCorrect, scenario, answerText) {
     itemsCollected.push(scenario.item); // Add item to collected items
     currentScenario++; // Move to the next scenario
 
-    // Update the inventory immediately after the correct answer
-    document.getElementById("inventory").innerHTML = "Items Collected: " + itemsCollected.join(', ');
-
     // Check if the game is over
     if (currentScenario < scenarios.length) {
       loadScenario();
@@ -111,54 +108,37 @@ function endGame() {
 // List of all scenarios
 const scenarios = [
   {
-    question: "You encounter a networking issue. What is your first step?",
+    question: "The villagers in Subnet Forest are unable to communicate over the network. Upon inspection, you find that their subnet mask is incorrectly configured. What should you do first to restore their connection?",
     answers: [
-      { text: "Check the cables", isCorrect: true },
-      { text: "Check the power supply", isCorrect: false },
-      { text: "Reboot the router", isCorrect: false }
+      { text: "Change the subnet mask to 255.255.255.0", isCorrect: true },
+      { text: "Reboot the router to refresh its settings", isCorrect: false },
+      { text: "Change the IP address of each device to 169.254.x.x", isCorrect: false },
+      { text: "Set the gateway IP address to 192.168.1.1", isCorrect: false }
     ],
-    item: "Basic Troubleshooting Kit",
-    hint: "Think about the most common networking issues."
+    item: "Network Configuration Tools",
+    hint: "The IP address and subnet mask must work together. Think about a subnet mask that is commonly used for local networks with fewer than 254 devices."
   },
   {
-    question: "The IP address of the device isn't valid. What should you do next?",
+    question: "The devices in Gateway Castle are all using APIPA addresses (169.254.x.x). What should you do first to fix the issue?",
     answers: [
-      { text: "Check the subnet mask", isCorrect: true },
-      { text: "Reboot the device", isCorrect: false },
-      { text: "Call the user", isCorrect: false }
+      { text: "Assign each device a static IP address within the same subnet", isCorrect: false },
+      { text: "Check if the devices are properly connected to the network via Ethernet", isCorrect: false },
+      { text: "Ensure that the DHCP server is running and reachable", isCorrect: true },
+      { text: "Disable all devices' network adapters and re-enable them", isCorrect: false }
     ],
-    item: "Subnetting Tool",
-    hint: "It's important to verify network settings."
+    item: "DHCP Wizard's Staff",
+    hint: "APIPA is a fallback address assigned when a device can't reach a DHCP server. You must check if the DHCP server is up and running."
   },
   {
-    question: "A device can't connect to the internet. What could be the problem?",
+    question: "The devices inside NAT Mountain are all using private IPv4 addresses. What is the most likely reason they can't access external websites?",
     answers: [
-      { text: "Check the default gateway", isCorrect: true },
-      { text: "Check the printer", isCorrect: false },
-      { text: "Check the monitor", isCorrect: false }
+      { text: "The devices are using addresses from the private range (10.x.x.x, 172.16.x.x, 192.168.x.x), which can't route to the internet without NAT", isCorrect: true },
+      { text: "The firewall is blocking all outgoing traffic to external IPs", isCorrect: false },
+      { text: "The subnet mask is too restrictive, preventing devices from accessing external sites", isCorrect: false },
+      { text: "The devices are using incorrect DNS servers", isCorrect: false }
     ],
-    item: "Network Configuration Guide",
-    hint: "Default gateway is critical for internet connectivity."
-  },
-  {
-    question: "A computer can't access certain websites but can access others. What do you do?",
-    answers: [
-      { text: "Check DNS settings", isCorrect: true },
-      { text: "Check the firewall", isCorrect: false },
-      { text: "Reboot the router", isCorrect: false }
-    ],
-    item: "DNS Configuration Manual",
-    hint: "DNS settings control website access."
-  },
-  {
-    question: "A user is getting a DHCP error. What is the first thing to check?",
-    answers: [
-      { text: "Check the DHCP server", isCorrect: true },
-      { text: "Check the router", isCorrect: false },
-      { text: "Check the DNS server", isCorrect: false }
-    ],
-    item: "DHCP Troubleshooting Guide",
-    hint: "DHCP server assigns IP addresses dynamically."
+    item: "NAT Amplifier",
+    hint: "Private addresses are great for internal use but cannot be routed to the internet directly. You need a NAT or router with NAT enabled to translate these addresses."
   }
 ];
 
