@@ -72,6 +72,14 @@ function updateProgress() {
     progressBar.style.width = progress + "%";
 }
 
+function moveCharacter() {
+    const character = document.getElementById("character");
+    const progressPercentage = (correctAnswers / totalScenarios) * 100;
+    const pathWidth = document.getElementById("path-container").offsetWidth;
+    const newPosition = (progressPercentage / 100) * pathWidth;
+    character.style.left = `${newPosition}px`;
+}
+
 function displayScenario() {
     const scenario = scenarios[currentScenario];
     const storyText = document.getElementById("story-text");
@@ -104,6 +112,7 @@ function checkAnswer(selectedAnswer) {
 
     currentScenario++;
     updateProgress();
+    moveCharacter();
 
     if (currentScenario < totalScenarios) {
         setTimeout(displayScenario, 1000);
