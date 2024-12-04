@@ -21,9 +21,9 @@ body {
 }
 
 button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    background-color: transparent; /* Remove background color */
+    color: white; /* Keep the text white */
+    border: 1px solid white; /* Add a border for visibility */
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
@@ -31,7 +31,8 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: white; /* Light color on hover for visibility */
+    color: black; /* Dark text color on hover */
 }
 
 #feedback {
