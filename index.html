@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Technician Adventure</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div id="game-container">
+      <h1>IT Technician Adventure</h1>
+      
+      <!-- Player Name Input -->
+      <div id="name-input-container">
+        <label for="player-name">Enter your name:</label>
+        <input type="text" id="player-name" placeholder="Your Name" />
+        <button id="start-btn" onclick="startGame()">Start Game</button>
+      </div>
+
+      <!-- Game Content -->
+      <div id="game-play" class="hidden">
+        <div id="scenario-container"></div>
+        <div id="answer-buttons" class="answer-buttons">
+          <!-- Dynamically filled with choices -->
+        </div>
+        <div id="feedback"></div>
+        <div id="hit-points">Hit Points: 5</div>
+        <div id="inventory">Items Collected: None</div>
+        <div id="respawn-container" class="hidden">
+          <button id="respawn-btn" onclick="respawnGame()">Respawn</button>
+        </div>
+      </div>
+
+      <!-- End Game Message -->
+      <div id="end-game-message" class="hidden">
+        <h2>Congratulations, <span id="player-name-display"></span>! You defeated the End Boss!</h2>
+        <p>Items Collected:</p>
+        <ul id="items-collected-list">
+          <!-- Dynamically filled with collected items -->
+        </ul>
+        <p>You have earned the title of IT Technician Tier 2!</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
