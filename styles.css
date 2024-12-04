@@ -1,46 +1,70 @@
 body {
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #222;
-    color: white;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
+}
+
+#story-text {
+    font-size: 20px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
-#game-container {
-    width: 80%;
-    margin: auto;
-    background-color: #333;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-h1 {
-    font-size: 2em;
-    color: #66ff66;
-}
-
-#story {
-    margin-bottom: 20px;
+#choices-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 button {
-    background-color: #444;
+    background-color: #4CAF50;
     color: white;
-    font-size: 1.2em;
-    padding: 10px;
     border: none;
-    cursor: pointer;
+    padding: 10px 20px;
     margin: 5px;
-    width: 80%;
-    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
-    background-color: #555;
+    background-color: #45a049;
 }
 
 #feedback {
-    font-size: 1.1em;
+    font-size: 18px;
     margin-top: 20px;
+    text-align: center;
+}
+
+#name-input {
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 20px;
+    width: 250px;
+}
+
+#end-message {
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#left-side {
+    position: fixed;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#left-side input {
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+}
+
+#left-side p {
+    font-size: 18px;
 }
