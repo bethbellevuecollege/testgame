@@ -1,133 +1,198 @@
-let currentScenario = 0;
-let correctAnswers = 0;
-let totalScenarios = 5;
+let playerName = '';
 let hitPoints = 5;
+let collectedItems = [];  // To track items collected
+let currentScenario = 0;
 
-// Start background music when the game loads
-const backgroundMusic = document.getElementById("background-music");
-backgroundMusic.play(); // Start music immediately when the page loads
-
-const scenarios = [
-    {
-        question: "You are standing in a dark forest. The path ahead is blocked by a large boulder. You need to identify a private IP address to bypass the rock.",
-        choices: ["192.168.1.1", "8.8.8.8", "172.16.5.5", "10.0.0.1"],
-        correctAnswer: "192.168.1.1",
-        feedback: "Correct! The boulder moves away as you identify a private address. You proceed forward."
-    },
-    {
-        question: "You come across a raging river. To cross, you need to identify the appropriate subnet mask for a network. What is the subnet mask for a network with 256 hosts?",
-        choices: ["255.255.255.0", "255.255.254.0", "255.255.252.0", "255.255.255.255"],
-        correctAnswer: "255.255.255.0",
-        feedback: "Correct! You cross the river safely with the right subnet mask."
-    },
-    {
-        question: "You find yourself at a fork in the road, where you must identify a Class B address to continue. Choose the correct address.",
-        choices: ["172.16.5.5", "192.168.0.1", "10.0.1.1", "8.8.8.8"],
-        correctAnswer: "172.16.5.5",
-        feedback: "Correct! The path opens before you as you recognize a Class B address."
-    },
-    {
-        question: "You arrive at a mysterious door. To open it, you need to identify the network address from the IP address and subnet mask. What is the network address for the IP 192.168.10.45/255.255.255.0?",
-        choices: ["192.168.10.0", "192.168.10.1", "192.168.11.0", "192.168.10.255"],
-        correctAnswer: "192.168.10.0",
-        feedback: "Correct! The door opens, and you may continue on your journey."
-    },
-    {
-        question: "You have reached the end of the path. To defeat the final boss, you need to choose the correct IPv6 address format.",
-        choices: ["2001:0db8:85a3:0000:0000:8a2e:0370:7334", "2001:db8:85a3:0:0:8a2e:370:7334", "192.168.1.1", "255.255.255.0"],
-        correctAnswer: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
-        feedback: "Correct! The final boss is defeated and you emerge victorious!"
-    }
+// Item data for each scenario (e.g., router, cable, etc.)
+const itemsForScenarios = [
+    "Network Cable",        // Scenario 1 item
+    "Router",               // Scenario 2 item
+    "Multimeter",           // Scenario 3 item
+    "Wi-Fi Analyzer",       // Scenario 4 item
+    "Switch",               // Scenario 5 item
+    "Firewall",             // Scenario 6 item
+    "Access Point",         // Scenario 7 item
+    "Ethernet Cable",       // Scenario 8 item
+    "Patch Panel",          // Scenario 9 item
+    "Tier 2 Technician Title" // End game reward
 ];
 
-function displayScenario() {
-    const scenario = scenarios[currentScenario];
-    const storyText = document.getElementById("story-text");
-    storyText.innerHTML = `<p>${scenario.question}</p>`;
+// Function to display collected items
+function displayCollectedItems() {
+    const itemsDiv = document.getElementById('items');
+    itemsDiv.innerHTML = '<h3>Collected Items:</h3><ul>';
+    collectedItems.forEach(item => {
+        itemsDiv.innerHTML += `<li>${item}</li>`;
+    });
+    itemsDiv.innerHTML += '</ul>';
+}
 
-    const choicesContainer = document.getElementById("choices-container");
-    choicesContainer.innerHTML = ""; 
+// Function to handle the end of the game
+function endGame() {
+    const endMessageDiv = document.getElementById('end-message');
+    endMessageDiv.innerHTML = `Congratulations, ${playerName}! You defeated the end boss!`;
+    
+    // Display collected items and Tier 2 Technician title
+    if (collectedItems.length === itemsForScenarios.length) {
+        endMessageDiv.innerHTML += "<br><strong>Achievement Unlocked: Tier 2 Technician!</strong>";
+    }
+    displayCollectedItems();
+    const respawnButton = document.createElement('button');
+    respawnButton.innerText = "Respawn";
+    respawnButton.onclick = respawn;
+    document.body.appendChild(respawnButton);
+}
 
-    scenario.choices.forEach(choice => {
-        const button = document.createElement("button");
-        button.textContent = choice;
-        button.onclick = function() {
-            checkAnswer(choice, scenario);
-        };
+// Function to handle player respawn
+function respawn() {
+    hitPoints = 5;
+    collectedItems = [];
+    currentScenario = 0;
+    document.getElementById('feedback').innerHTML = '';
+    document.getElementById('story-text').innerHTML = 'You have respawned. Your adventure begins again!';
+    document.getElementById('choices-container').innerHTML = '';
+    displayCollectedItems();
+    startGame();
+}
+
+// Function to start the game
+function startGame() {
+    document.getElementById('feedback').innerHTML = '';
+    document.getElementById('end-message').innerHTML = '';
+    playerName = document.getElementById('name-input').value || "Technician";
+    document.getElementById('story-text').innerHTML = 'Welcome to your IT Adventure, ' + playerName + '! You have 5 hit points. Good luck!';
+    showScenario(currentScenario);
+}
+
+// Function to show the current scenario
+function showScenario(scenarioNumber) {
+    if (hitPoints <= 0) {
+        document.getElementById('feedback').innerHTML = 'Oh no! You were defeated! Respawn to try again.';
+        return;
+    }
+
+    const scenarioText = getScenarioText(scenarioNumber);
+    document.getElementById('story-text').innerHTML = scenarioText.text;
+    const choicesContainer = document.getElementById('choices-container');
+    choicesContainer.innerHTML = '';
+
+    scenarioText.choices.forEach(choice => {
+        const button = document.createElement('button');
+        button.innerText = choice.text;
+        button.onclick = () => processChoice(choice.isCorrect, scenarioNumber);
         choicesContainer.appendChild(button);
     });
 }
 
-function checkAnswer(selectedAnswer, scenario) {
-    const storyText = document.getElementById("story-text");
-    const feedback = document.getElementById("feedback");
-
-    if (selectedAnswer === scenario.correctAnswer) {
-        correctAnswers++;
-        feedback.innerHTML = `<p>Correct! ${scenario.feedback}</p>`;
-    } else {
-        hitPoints--; 
-        feedback.innerHTML = `<p>Incorrect. You lost 1 hit point. You now have ${hitPoints} hit points left.</p>`;
-
-        if (hitPoints === 0) {
-            storyText.innerHTML = "<p>Oh no! You were defeated! Respawn to try again.</p>";
-            showRespawnButton();
-            return;
+// Function to get the scenario details based on the scenario number
+function getScenarioText(scenarioNumber) {
+    const scenarios = [
+        {
+            text: "You arrive at a desk with a laptop that won't connect to the network. What do you check first?",
+            choices: [
+                { text: "Check the cable connection", isCorrect: true },
+                { text: "Restart the laptop", isCorrect: false },
+                { text: "Contact the user", isCorrect: false }
+            ]
+        },
+        {
+            text: "The network printer isn't responding. What do you check first?",
+            choices: [
+                { text: "Check the printer's IP address", isCorrect: true },
+                { text: "Check the paper tray", isCorrect: false },
+                { text: "Check the power cord", isCorrect: false }
+            ]
+        },
+        {
+            text: "A user reports that the Wi-Fi is very slow. What do you check first?",
+            choices: [
+                { text: "Check for nearby Wi-Fi interference", isCorrect: true },
+                { text: "Check the cable connection", isCorrect: false },
+                { text: "Check the printer queue", isCorrect: false }
+            ]
+        },
+        {
+            text: "The server is down, but you can't find any network issues. What should you check?",
+            choices: [
+                { text: "Check the server's power supply", isCorrect: true },
+                { text: "Check the user's password", isCorrect: false },
+                { text: "Check the internet connection", isCorrect: false }
+            ]
+        },
+        {
+            text: "A computer won't boot up. What do you check first?",
+            choices: [
+                { text: "Check the power cable", isCorrect: true },
+                { text: "Check the monitor brightness", isCorrect: false },
+                { text: "Check the operating system", isCorrect: false }
+            ]
+        },
+        {
+            text: "A router is not connecting to the internet. What do you check first?",
+            choices: [
+                { text: "Check the router's internet connection", isCorrect: true },
+                { text: "Check the wireless signal", isCorrect: false },
+                { text: "Check the device's power settings", isCorrect: false }
+            ]
+        },
+        {
+            text: "A user's computer has a slow connection. What do you check first?",
+            choices: [
+                { text: "Check the network adapter settings", isCorrect: true },
+                { text: "Check the Wi-Fi signal strength", isCorrect: false },
+                { text: "Check the power settings", isCorrect: false }
+            ]
+        },
+        {
+            text: "A switch isn't routing correctly. What do you check first?",
+            choices: [
+                { text: "Check the VLAN settings", isCorrect: true },
+                { text: "Check the switch's firmware", isCorrect: false },
+                { text: "Check the IP settings", isCorrect: false }
+            ]
+        },
+        {
+            text: "You are troubleshooting a server that is unreachable. What do you check first?",
+            choices: [
+                { text: "Check the server's IP address", isCorrect: true },
+                { text: "Check the user's credentials", isCorrect: false },
+                { text: "Check the file sharing settings", isCorrect: false }
+            ]
+        },
+        {
+            text: "You're at the final stage of your journey and need to configure a firewall rule. What do you need?",
+            choices: [
+                { text: "Firewall configuration tool", isCorrect: true },
+                { text: "Switch configuration tool", isCorrect: false },
+                { text: "Ethernet cable", isCorrect: false }
+            ]
         }
-        return;
+    ];
+
+    return scenarios[scenarioNumber];
+}
+
+// Function to process the player's choice
+function processChoice(isCorrect, scenarioNumber) {
+    if (isCorrect) {
+        collectedItems.push(itemsForScenarios[scenarioNumber]);
+        document.getElementById('feedback').innerHTML = `Correct! You earned a new item: ${itemsForScenarios[scenarioNumber]}`;
+    } else {
+        hitPoints--;
+        document.getElementById('feedback').innerHTML = `Incorrect! You lost 1 hit point. Remaining hit points: ${hitPoints}`;
     }
 
     currentScenario++;
-    if (currentScenario < totalScenarios) {
-        setTimeout(displayScenario, 1000);
+
+    if (currentScenario >= itemsForScenarios.length) {
+        endGame();
     } else {
-        promptForName();
+        showScenario(currentScenario);
     }
 }
 
-function showRespawnButton() {
-    const choicesContainer = document.getElementById("choices-container");
-
-    const respawnButton = document.createElement("button");
-    respawnButton.textContent = "Respawn";
-    respawnButton.onclick = function() {
-        resetGame();
-    };
-
-    choicesContainer.appendChild(respawnButton);
-}
-
-function resetGame() {
-    hitPoints = 5; 
-    currentScenario = 0; 
-    const feedback = document.getElementById("feedback");
-    feedback.innerHTML = ""; 
-    setTimeout(displayScenario, 1000); 
-}
-
-function promptForName() {
-    const storyText = document.getElementById("story-text");
-    storyText.innerHTML = "<p>Congratulations, adventurer! You've completed the journey!</p>";
-    
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.placeholder = "Enter your full name...";
-    nameInput.id = "name-input"; // Added to style the name input field later
-    document.getElementById("choices-container").appendChild(nameInput);
-
-    const nameMessage = document.createElement("p");
-    nameMessage.id = "end-message"; // Added for the end game message
-    nameMessage.textContent = "Please enter your name to receive your final congratulations.";
-    document.getElementById("choices-container").appendChild(nameMessage);
-
-    nameInput.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            const playerName = nameInput.value;
-            const endMessage = document.getElementById("end-message");
-            endMessage.textContent = `Congratulations, ${playerName}! You defeated the end boss!`;
-            nameInput.disabled = true; // Disable input after the name is entered
-        }
-    });
-}
-
-displayScenario();
+document.getElementById('name-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        startGame();
+    }
+});
