@@ -11,11 +11,14 @@ function startGame() {
     alert("Please enter your name to start.");
     return;
   }
+
   // Update player name on the page
   document.getElementById("player-name-display").innerText = playerName;
+
   // Hide name input form and show the game content
   document.getElementById("name-input-container").style.display = "none";
   document.getElementById("game-play").style.display = "block";
+
   loadScenario(); // Load the first scenario
 }
 
@@ -25,7 +28,7 @@ function loadScenario() {
   if (hitPoints <= 0) {
     return;
   }
-  
+
   // Get the current scenario from the scenarios array
   const scenario = getScenario(currentScenario);
   
@@ -155,3 +158,8 @@ const scenarios = [
     hint: "DHCP server assigns IP addresses dynamically."
   }
 ];
+
+// Fetches a scenario by its index
+function getScenario(index) {
+  return scenarios[index];
+}
