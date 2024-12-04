@@ -80,9 +80,8 @@ function checkAnswer(selectedAnswer) {
 
         // If hit points reach 0, the player "dies" and has to start over
         if (hitPoints === 0) {
-            storyText.innerHTML = "<p>You have died! You failed to answer the questions correctly. Try again.</p>";
-            hitPoints = 5; // Reset hit points
-            currentScenario = 0; // Reset game
+            storyText.innerHTML = "<p>Oh no! You were defeated! Respawn to try again.</p>";
+            resetGame(); // Reset game if player dies
             return;
         }
         return; // Don't advance to the next question if incorrect
@@ -94,6 +93,12 @@ function checkAnswer(selectedAnswer) {
     } else {
         promptForName(); // When all scenarios are completed
     }
+}
+
+function resetGame() {
+    hitPoints = 5; // Reset hit points
+    currentScenario = 0; // Reset game to first scenario
+    setTimeout(displayScenario, 1000); // Restart the game
 }
 
 function promptForName() {
