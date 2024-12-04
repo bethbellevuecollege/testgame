@@ -53,7 +53,7 @@ const scenarios = [
         feedback: "Correct! The loopback address (127.0.0.1) is used to test the local machine's network stack."
     },
     {
-        question: "Which of the following is an example of a multicast IP address?",
+        question: "Which of the following is a valid multicast IP address?",
         choices: ["224.0.0.1", "192.168.1.1", "10.0.0.1", "255.255.255.255"],
         correctAnswer: "224.0.0.1",
         feedback: "Correct! IP addresses in the range 224.0.0.0 to 239.255.255.255 are used for multicast communication."
