@@ -112,12 +112,20 @@ function promptForName() {
     const nameInput = document.createElement("input");
     nameInput.type = "text";
     nameInput.placeholder = "Enter your full name...";
+    nameInput.id = "name-input"; // Added to style the name input field later
     document.getElementById("choices-container").appendChild(nameInput);
+
+    const nameMessage = document.createElement("p");
+    nameMessage.id = "end-message"; // Added for the end game message
+    nameMessage.textContent = "Please enter your name to receive your final congratulations.";
+    document.getElementById("choices-container").appendChild(nameMessage);
 
     nameInput.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             const playerName = nameInput.value;
-            alert(`Congratulations, ${playerName}! You defeated the end boss!`);
+            const endMessage = document.getElementById("end-message");
+            endMessage.textContent = `Congratulations, ${playerName}! You defeated the end boss!`;
+            nameInput.disabled = true; // Disable input after the name is entered
         }
     });
 }
