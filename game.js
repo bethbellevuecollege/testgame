@@ -1,6 +1,7 @@
 let currentScenario = 0;
 let correctAnswers = 0;
-let totalScenarios = 10;
+let totalScenarios = 7; // Adjust total scenarios as needed
+let hitPoints = 5;
 
 const scenarios = [
     {
@@ -74,18 +75,64 @@ function checkAnswer(selectedAnswer) {
         correctAnswers++;
         feedback.innerHTML = `<p>Correct! ${scenario.feedback}</p>`;
     } else {
-        feedback.innerHTML = `<p>Incorrect. You need to try again!</p>`;
-        return;
+        hitPoints--; // Lose 1 hit point
+        feedback.innerHTML = `<p>Incorrect. You lost 1 hit point. You now have ${hitPoints} hit points left.</p>`;
+
+        // If hit points reach 0, the player "dies" and has to start over
+        if (hitPoints === 0) {
+            storyText.innerHTML = "<p>You have died! You failed to answer the questions correctly. Try again.</p>";
+            hitPoints = 5; // Reset hit points
+            currentScenario = 0; // Reset game
+            return;
+        }
+        return; // Don't advance to the next question if incorrect
     }
 
     currentScenario++;
     if (currentScenario < totalScenarios) {
-        setTimeout(displayScenario, 1000);
+        setTimeout(displayScenario, 1000); // Wait a bit before showing next scenario
     } else {
-        storyText.innerHTML = "<p>Congratulations! You've completed your journey and defeated all the challenges!</p>";
+        promptForName(); // When all scenarios are completed
     }
 }
 
+function promptForName() {
+    const storyText = document.getElementById("story-text");
+    storyText.innerHTML = "<p>Congratulations, adventurer! You've completed the journey!</p>";
+    
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.placeholder = "Enter your full name";
+    nameInput.id = "player-name";
+    
+    const submitButton = document.createElement("button");
+    submitButton.textContent = "Submit";
+    submitButton.onclick = function() {
+        const playerName = document.getElementById("player-name").value;
+        displayEndMessage(playerName);
+    };
+
+    const choicesContainer = document.getElementById("choices-container");
+    choicesContainer.innerHTML = "";
+    choicesContainer.appendChild(nameInput);
+    choicesContainer.appendChild(submitButton);
+}
+
+function displayEndMessage(playerName) {
+    const storyText = document.getElementById("story-text");
+    storyText.innerHTML = `<p>Congratulations, ${playerName}! You defeated the end boss!</p>`;
+
+    const choicesContainer = document.getElementById("choices-container");
+    choicesContainer.innerHTML = ""; // Clear choices
+
+    const restartButton = document.createElement("button");
+    restartButton.textContent = "Play Again";
+    restartButton.onclick = function() {
+        location.reload(); // Reload the game to play again
+    };
+    choicesContainer.appendChild(restartButton);
+}
+
 window.onload = function() {
-    displayScenario();
+    displayScenario(); // Start the game when the page loads
 };
