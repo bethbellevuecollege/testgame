@@ -4,77 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Networking Adventure Game</title>
-    <style>
-        /* Basic styling for the page */
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        #path-container {
-            position: relative;
-            width: 100%;
-            height: 150px;
-            background-color: #c2f0c2;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
-
-        #character {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            width: 50px;
-            height: 50px;
-            background-color: blue;
-            border-radius: 50%;
-            transition: left 1s ease-out;
-        }
-
-        .creature {
-            position: absolute;
-            bottom: 10px;
-            width: 50px;
-            height: 50px;
-            background-color: red;
-            border-radius: 50%;
-        }
-
-        #story-text {
-            font-size: 18px;
-            margin: 20px 0;
-        }
-
-        .choices-container button {
-            font-size: 18px;
-            margin: 10px;
-            padding: 10px 20px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .choices-container button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <h1>Networking Adventure Game</h1>
 
-    <!-- Path Visualization -->
     <div id="path-container">
-        <div id="character"></div>
+        <div id="character">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="left-arm"></div>
+            <div class="right-arm"></div>
+            <div class="left-leg"></div>
+            <div class="right-leg"></div>
+        </div>
     </div>
 
-    <!-- Story and Choices -->
-    <div id="story-text"></div>
-    <div class="choices-container" id="choices-container"></div>
+    <div id="story-text">
+        <p>Welcome to the Networking Adventure! Help the technician solve network problems to progress down the path.</p>
+    </div>
+
+    <div class="choices-container">
+        <!-- Buttons for the choices will be inserted dynamically -->
+    </div>
+
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
 
     <script src="game.js"></script>
 </body>
