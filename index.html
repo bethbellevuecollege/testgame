@@ -3,32 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Technician Adventure Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Adventure Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+        #choices-container {
+            margin-top: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #444;
+        }
+        #respawn-btn {
+            display: none;
+        }
+        #story-text {
+            margin: 20px 0;
+        }
+        #end-message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        #hit-points {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="game-container">
-        <h1>IT Technician Adventure Game</h1>
-        
-        <!-- Player name input -->
-        <div>
-            <label for="name-input">Enter your name:</label>
-            <input type="text" id="name-input" placeholder="Enter your name">
-        </div>
-        
-        <div id="story-text"></div>
-        
-        <div id="choices-container"></div>
 
-        <div id="feedback"></div>
-        
-        <!-- Collected Items section -->
-        <div id="items"></div>
-        
-        <!-- End game message -->
-        <div id="end-message"></div>
+    <div id="name-input-container">
+        <input type="text" id="name-input" placeholder="Enter your name" />
+        <button onclick="startGame()">Start Game</button>
     </div>
 
-    <script src="script.js"></script>
+    <div id="game-container" style="display:none;">
+        <div id="story-text"></div>
+        <div id="choices-container"></div>
+        <div id="hit-points">Hit Points: 5</div>
+        <div id="items"></div>
+        <div id="feedback"></div>
+        <button id="respawn-btn" onclick="respawn()">Respawn</button>
+    </div>
+
+    <div id="end-message"></div>
+
+    <script src="game.js"></script>
 </body>
 </html>
