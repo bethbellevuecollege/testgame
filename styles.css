@@ -1,72 +1,49 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: black; /* Set background to black */
-    color: white; /* Set font color to white */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: black;
+    color: white;
     padding: 20px;
 }
 
-#story-text {
-    font-size: 20px;
-    margin-bottom: 20px;
+#game-container {
+    max-width: 600px;
+    margin: 0 auto;
     text-align: center;
 }
 
-#choices-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    width: 50%;
 }
 
 button {
-    background-color: transparent; /* Ensure background is transparent */
-    color: white; /* White text color */
-    border: 2px solid white; /* Border color for visibility */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
     padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
+    margin: 10px;
     font-size: 16px;
+    cursor: pointer;
 }
 
 button:hover {
-    background-color: white; /* Light background on hover */
-    color: black; /* Dark text color on hover */
+    background-color: #45a049;
 }
 
 #feedback {
-    font-size: 18px;
     margin-top: 20px;
-    text-align: center;
+    font-size: 18px;
+    color: #FFD700;
 }
 
-#name-input {
-    padding: 10px;
-    font-size: 16px;
+#items {
     margin-top: 20px;
-    width: 250px;
+    color: lightgreen;
 }
 
 #end-message {
-    font-size: 18px;
-    margin-top: 10px;
-    text-align: center;
-}
-
-#left-side {
-    position: fixed;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-#left-side input {
-    padding: 10px;
-    font-size: 16px;
-    width: 200px;
-}
-
-#left-side p {
-    font-size: 18px;
+    margin-top: 30px;
+    font-size: 20px;
+    color: lightblue;
 }
