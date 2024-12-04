@@ -2,7 +2,7 @@
 let currentScenario = 0;
 let playerName = '';
 
-// Define scenarios as an array of objects
+// Define all 10 scenarios as an array of objects
 const scenarios = [
     {
         story: "Trouble Ticket 1: A user reports that they can't access the company's internal website. They can ping the router but cannot reach any internal servers. What could be the issue?",
@@ -42,6 +42,46 @@ const scenarios = [
             { text: "255.255.255.192", correct: true, feedback: "Correct! A subnet mask of 255.255.255.192 will divide the 192.168.10.0/24 network into 4 subnets." },
             { text: "255.255.255.128", correct: false, feedback: "Incorrect. A subnet mask of 255.255.255.128 would create only two subnets." },
             { text: "255.255.255.0", correct: false, feedback: "Incorrect. This subnet mask doesn’t subnet the network at all, leaving it as one large subnet." }
+        ]
+    },
+    {
+        story: "Trouble Ticket 6: A network engineer needs to configure a subnet for a network segment with 300 hosts. What subnet mask should they use?",
+        choices: [
+            { text: "255.255.255.0", correct: false, feedback: "Incorrect. This subnet mask supports only 254 hosts, which is insufficient." },
+            { text: "255.255.254.0", correct: true, feedback: "Correct! A subnet mask of 255.255.254.0 provides 510 usable IP addresses, which is enough for 300 hosts." },
+            { text: "255.255.255.128", correct: false, feedback: "Incorrect. This subnet mask supports only 126 hosts, which isn't enough." }
+        ]
+    },
+    {
+        story: "Trouble Ticket 7: A user reports that they can't connect to a printer on the network. The printer has the IP address 192.168.2.100, and the user's computer has 192.168.3.50. They are both connected to the same router. What could be the issue?",
+        choices: [
+            { text: "The subnet mask of the devices is incorrect.", correct: true, feedback: "Correct! The devices are in different subnets, and communication between them will fail without a route or correct subnet mask." },
+            { text: "The printer is offline.", correct: false, feedback: "Incorrect. The issue is more likely related to network configuration, not the printer's status." },
+            { text: "The router needs to be rebooted.", correct: false, feedback: "Incorrect. The router is likely not the issue; it’s the subnet configuration." }
+        ]
+    },
+    {
+        story: "Trouble Ticket 8: A user cannot reach a website, but they can ping other devices on the network. What could be the issue?",
+        choices: [
+            { text: "The user’s DNS settings may be misconfigured.", correct: true, feedback: "Correct! DNS misconfiguration is a common issue when devices can't resolve domain names but can ping IPs." },
+            { text: "The user’s gateway is misconfigured.", correct: false, feedback: "Incorrect. If they can ping other devices on the network, their gateway is likely functioning." },
+            { text: "The user’s device is infected with malware.", correct: false, feedback: "Incorrect. Malware could cause issues, but this scenario points to DNS misconfiguration." }
+        ]
+    },
+    {
+        story: "Trouble Ticket 9: A user can connect to the internet, but certain sites are not accessible. What is the likely cause?",
+        choices: [
+            { text: "The user's IP address is being blocked by a firewall.", correct: false, feedback: "Incorrect. A firewall typically blocks traffic, but this issue seems more isolated to specific websites." },
+            { text: "The user's DNS cache is corrupted.", correct: true, feedback: "Correct! A corrupted DNS cache could cause issues when accessing specific websites while others are fine." },
+            { text: "The user's NIC driver is outdated.", correct: false, feedback: "Incorrect. While drivers can cause issues, this scenario points to a DNS cache problem." }
+        ]
+    },
+    {
+        story: "Trouble Ticket 10: You are configuring a Class B network with the subnet 172.16.0.0/16. You need to create 500 subnets. What subnet mask should you use?",
+        choices: [
+            { text: "255.255.255.0", correct: false, feedback: "Incorrect. This would give you only 256 subnets, which isn't enough." },
+            { text: "255.255.254.0", correct: true, feedback: "Correct! A subnet mask of 255.255.254.0 gives you 512 subnets, enough for your needs." },
+            { text: "255.255.255.240", correct: false, feedback: "Incorrect. This subnet mask would create too many subnets and too few hosts per subnet." }
         ]
     }
 ];
