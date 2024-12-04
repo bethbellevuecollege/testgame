@@ -4,7 +4,7 @@ let totalScenarios = 5;
 let hitPoints = 5;
 
 // Start background music when the game loads
-const backgroundMusic = document.getElementById("background-music");
+const backgroundMusic = document.getElementById("background-music.mp3");
 backgroundMusic.play(); // Start music immediately when the page loads
 
 const scenarios = [
