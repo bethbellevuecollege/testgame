@@ -7,27 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <h1>Networking Adventure Game</h1>
-
-    <div id="path-container">
-        <div id="character">
-            <img src="stickfigure.png" alt="Stick Figure">
+    <div id="game-container">
+        <h1>Networking Adventure</h1>
+        <div id="story">
+            <p id="story-text">Welcome to the adventure! Your journey begins here...</p>
+        </div>
+        <div id="choices-container">
+            <!-- Choices will appear here dynamically -->
+        </div>
+        <div id="feedback">
+            <!-- Feedback will appear here -->
         </div>
     </div>
-
-    <div id="story-text">
-        <p>Welcome to the Networking Adventure! Help the technician solve network problems to progress down the path.</p>
-    </div>
-
-    <div class="choices-container">
-        <!-- Buttons for the choices will be inserted dynamically -->
-    </div>
-
-    <div id="progress-container">
-        <div id="progress-bar"></div>
-    </div>
-
     <script src="game.js"></script>
 </body>
 </html>
