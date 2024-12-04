@@ -11,22 +11,32 @@ function startGame() {
     alert("Please enter your name to start.");
     return;
   }
+  // Update player name on the page
   document.getElementById("player-name-display").innerText = playerName;
+  // Hide name input form and show the game content
   document.getElementById("name-input-container").style.display = "none";
   document.getElementById("game-play").style.display = "block";
-  loadScenario();
+  loadScenario(); // Load the first scenario
 }
 
 // Function to load the current scenario
 function loadScenario() {
+  // Stop if the player is out of hit points
   if (hitPoints <= 0) {
-    return; // Stop if the player is out of hit points
+    return;
   }
+  
+  // Get the current scenario from the scenarios array
   const scenario = getScenario(currentScenario);
+  
+  // Display the question
   document.getElementById("scenario-container").innerHTML = scenario.question;
+  
+  // Get the answer buttons container and clear it
   const answerButtons = document.getElementById("answer-buttons");
   answerButtons.innerHTML = "";
-  
+
+  // Create buttons for the possible answers
   scenario.answers.forEach((answer, index) => {
     const button = document.createElement("button");
     button.innerText = answer.text;
@@ -41,7 +51,9 @@ function handleAnswer(isCorrect, scenario, answerText) {
   if (isCorrect) {
     feedback.innerHTML = "Correct! You move forward.";
     itemsCollected.push(scenario.item); // Add item to collected items
-    currentScenario++;
+    currentScenario++; // Move to the next scenario
+
+    // Check if the game is over
     if (currentScenario < scenarios.length) {
       loadScenario();
     } else {
@@ -49,10 +61,11 @@ function handleAnswer(isCorrect, scenario, answerText) {
     }
   } else {
     feedback.innerHTML = `Incorrect. Hint: ${scenario.hint}`;
-    hitPoints--;
+    hitPoints--; // Decrease hit points on incorrect answer
     document.getElementById("hit-points").innerHTML = "Hit Points: " + hitPoints;
+
     if (hitPoints <= 0) {
-      showRespawnButton();
+      showRespawnButton(); // Show respawn button if hit points reach 0
     }
   }
 }
@@ -70,13 +83,15 @@ function respawnGame() {
   document.getElementById("hit-points").innerHTML = "Hit Points: " + hitPoints;
   document.getElementById("inventory").innerHTML = "Items Collected: None";
   document.getElementById("respawn-container").style.display = "none";
-  loadScenario();
+  loadScenario(); // Reload the first scenario
 }
 
 // Function to end the game and show the results
 function endGame() {
   document.getElementById("game-play").style.display = "none";
   document.getElementById("end-game-message").style.display = "block";
+  
+  // Display the items collected and award the title
   document.getElementById("end-game-message").innerHTML = `
     <h2>Congratulations, ${playerName}! You defeated the End Boss!</h2>
     <p>Items Collected:</p>
@@ -109,5 +124,34 @@ const scenarios = [
     item: "Subnetting Tool",
     hint: "It's important to verify network settings."
   },
-  // Add more scenarios as needed
+  {
+    question: "A device can't connect to the internet. What could be the problem?",
+    answers: [
+      { text: "Check the default gateway", isCorrect: true },
+      { text: "Check the printer", isCorrect: false },
+      { text: "Check the monitor", isCorrect: false }
+    ],
+    item: "Network Configuration Guide",
+    hint: "Default gateway is critical for internet connectivity."
+  },
+  {
+    question: "A computer can't access certain websites but can access others. What do you do?",
+    answers: [
+      { text: "Check DNS settings", isCorrect: true },
+      { text: "Check the firewall", isCorrect: false },
+      { text: "Reboot the router", isCorrect: false }
+    ],
+    item: "DNS Configuration Manual",
+    hint: "DNS settings control website access."
+  },
+  {
+    question: "A user is getting a DHCP error. What is the first thing to check?",
+    answers: [
+      { text: "Check the DHCP server", isCorrect: true },
+      { text: "Check the router", isCorrect: false },
+      { text: "Check the DNS server", isCorrect: false }
+    ],
+    item: "DHCP Troubleshooting Guide",
+    hint: "DHCP server assigns IP addresses dynamically."
+  }
 ];
