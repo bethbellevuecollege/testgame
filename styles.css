@@ -3,11 +3,15 @@ body {
   background-color: #000;
   color: white;
   padding: 20px;
+  margin: 0;
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   text-align: center;
 }
 
@@ -16,6 +20,9 @@ button {
   font-size: 16px;
   cursor: pointer;
   margin: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
 }
 
 button:hover {
@@ -51,4 +58,11 @@ button:hover {
 #end-game-message li {
   font-size: 18px;
   padding: 5px 0;
+}
+
+@media (max-width: 600px) {
+  button {
+    width: 100%;
+    font-size: 14px;
+  }
 }
