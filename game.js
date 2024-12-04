@@ -1,68 +1,46 @@
-let playerName = '';
+// Variables to track the game state
+let playerName = "";
 let hitPoints = 5;
-let inventory = [];
-let currentScenario = 0;
-let correctAnswers = 0;
+let itemsCollected = []; // Array to store the items collected during the game
+let currentScenario = 0; // Tracks which scenario the player is on
 
-const scenarios = [
-  {
-    question: "What is an IPv4 address class for a private network?",
-    choices: ["Class A", "Class B", "Class C", "Class D"],
-    correctAnswer: "Class B",
-    hint: "This class is commonly used for private networks in organizations."
-  },
-  {
-    question: "What is the APIPA address range?",
-    choices: ["169.254.0.0 - 169.254.255.255", "192.168.0.0 - 192.168.255.255", "10.0.0.0 - 10.255.255.255", "172.16.0.0 - 172.31.255.255"],
-    correctAnswer: "169.254.0.0 - 169.254.255.255",
-    hint: "This range is automatically assigned when a device cannot contact a DHCP server."
-  },
-  {
-    question: "What does RFC1918 define?",
-    choices: ["Private IP address ranges", "Public IP address ranges", "IP address assignments for ISPs", "None of the above"],
-    correctAnswer: "Private IP address ranges",
-    hint: "This RFC reserves specific ranges for private use."
-  },
-  // Add more scenarios as needed
-];
-
+// Start the game when the player clicks the start button
 function startGame() {
-  playerName = document.getElementById('player-name').value;
+  playerName = document.getElementById("player-name").value;
   if (!playerName) {
-    alert("Please enter your name to start!");
+    alert("Please enter your name to start.");
     return;
   }
-  
-  document.getElementById('name-input-container').classList.add('hidden');
-  document.getElementById('game-play').classList.remove('hidden');
-  document.getElementById('player-name-display').textContent = playerName;
-
+  document.getElementById("player-name-display").innerText = playerName;
+  document.getElementById("name-input-container").style.display = "none";
+  document.getElementById("game-play").style.display = "block";
   loadScenario();
 }
 
+// Function to load the current scenario
 function loadScenario() {
-  const scenario = scenarios[currentScenario];
-  document.getElementById('scenario-container').textContent = scenario.question;
-  const answerButtons = document.getElementById('answer-buttons');
-  answerButtons.innerHTML = '';
+  if (hitPoints <= 0) {
+    return; // Stop if the player is out of hit points
+  }
+  const scenario = getScenario(currentScenario);
+  document.getElementById("scenario-container").innerHTML = scenario.question;
+  const answerButtons = document.getElementById("answer-buttons");
+  answerButtons.innerHTML = "";
   
-  scenario.choices.forEach(choice => {
-    const button = document.createElement('button');
-    button.textContent = choice;
-    button.onclick = () => checkAnswer(choice);
+  scenario.answers.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.innerText = answer.text;
+    button.onclick = () => handleAnswer(answer.isCorrect, scenario, answer.text);
     answerButtons.appendChild(button);
   });
-
-  document.getElementById('feedback').textContent = '';
 }
 
-function checkAnswer(selectedAnswer) {
-  const scenario = scenarios[currentScenario];
-
-  if (selectedAnswer === scenario.correctAnswer) {
-    correctAnswers++;
-    inventory.push(scenario.correctAnswer);
-    document.getElementById('inventory').textContent = `Items Collected: ${inventory.join(', ')}`;
+// Handle the player's answer
+function handleAnswer(isCorrect, scenario, answerText) {
+  const feedback = document.getElementById("feedback");
+  if (isCorrect) {
+    feedback.innerHTML = "Correct! You move forward.";
+    itemsCollected.push(scenario.item); // Add item to collected items
     currentScenario++;
     if (currentScenario < scenarios.length) {
       loadScenario();
@@ -70,27 +48,66 @@ function checkAnswer(selectedAnswer) {
       endGame();
     }
   } else {
+    feedback.innerHTML = `Incorrect. Hint: ${scenario.hint}`;
     hitPoints--;
-    document.getElementById('hit-points').textContent = `Hit Points: ${hitPoints}`;
-    document.getElementById('feedback').textContent = `Incorrect! Hint: ${scenario.hint}`;
-    
-    if (hitPoints === 0) {
-      document.getElementById('respawn-container').classList.remove('hidden');
+    document.getElementById("hit-points").innerHTML = "Hit Points: " + hitPoints;
+    if (hitPoints <= 0) {
+      showRespawnButton();
     }
   }
 }
 
+// Show respawn button when the player is out of hit points
+function showRespawnButton() {
+  document.getElementById("respawn-container").style.display = "block";
+}
+
+// Function to respawn and reset the game
 function respawnGame() {
   hitPoints = 5;
   currentScenario = 0;
-  inventory = [];
-  document.getElementById('hit-points').textContent = `Hit Points: ${hitPoints}`;
-  document.getElementById('inventory').textContent = `Items Collected: None`;
-  document.getElementById('respawn-container').classList.add('hidden');
+  itemsCollected = [];
+  document.getElementById("hit-points").innerHTML = "Hit Points: " + hitPoints;
+  document.getElementById("inventory").innerHTML = "Items Collected: None";
+  document.getElementById("respawn-container").style.display = "none";
   loadScenario();
 }
 
+// Function to end the game and show the results
 function endGame() {
-  document.getElementById('end-game-message').classList.remove('hidden');
-  document.getElementById('game-play').classList.add('hidden');
+  document.getElementById("game-play").style.display = "none";
+  document.getElementById("end-game-message").style.display = "block";
+  document.getElementById("end-game-message").innerHTML = `
+    <h2>Congratulations, ${playerName}! You defeated the End Boss!</h2>
+    <p>Items Collected:</p>
+    <ul>
+      ${itemsCollected.map(item => `<li>${item}</li>`).join('')}
+    </ul>
+    <p>You have earned the title of IT Technician Tier 2!</p>
+  `;
 }
+
+// List of all scenarios
+const scenarios = [
+  {
+    question: "You encounter a networking issue. What is your first step?",
+    answers: [
+      { text: "Check the cables", isCorrect: true },
+      { text: "Check the power supply", isCorrect: false },
+      { text: "Reboot the router", isCorrect: false }
+    ],
+    item: "Basic Troubleshooting Kit",
+    hint: "Think about the most common networking issues."
+  },
+  {
+    question: "The IP address of the device isn't valid. What should you do next?",
+    answers: [
+      { text: "Check the subnet mask", isCorrect: true },
+      { text: "Reboot the device", isCorrect: false },
+      { text: "Call the user", isCorrect: false }
+    ],
+    item: "Subnetting Tool",
+    hint: "It's important to verify network settings."
+  },
+  // Add more scenarios as needed
+];
