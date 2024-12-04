@@ -81,7 +81,7 @@ function checkAnswer(selectedAnswer) {
         // If hit points reach 0, the player "dies" and has to start over
         if (hitPoints === 0) {
             storyText.innerHTML = "<p>Oh no! You were defeated! Respawn to try again.</p>";
-            resetGame(); // Reset game if player dies
+            showRespawnButton(); // Show respawn button when defeated
             return;
         }
         return; // Don't advance to the next question if incorrect
@@ -95,9 +95,24 @@ function checkAnswer(selectedAnswer) {
     }
 }
 
+function showRespawnButton() {
+    const choicesContainer = document.getElementById("choices-container");
+
+    // Create and show respawn button
+    const respawnButton = document.createElement("button");
+    respawnButton.textContent = "Respawn";
+    respawnButton.onclick = function() {
+        resetGame(); // Reset the game when the respawn button is clicked
+    };
+
+    choicesContainer.appendChild(respawnButton); // Add the button to the page
+}
+
 function resetGame() {
     hitPoints = 5; // Reset hit points
     currentScenario = 0; // Reset game to first scenario
+    const feedback = document.getElementById("feedback");
+    feedback.innerHTML = ""; // Clear feedback
     setTimeout(displayScenario, 1000); // Restart the game
 }
 
