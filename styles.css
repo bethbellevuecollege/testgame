@@ -1,46 +1,94 @@
+/* Basic styles for the game */
 body {
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #222;
-    color: white;
-    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     text-align: center;
+    color: #333;
 }
 
 #game-container {
     width: 80%;
-    margin: auto;
-    background-color: #333;
+    max-width: 800px;
+    background-color: #fff;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
 }
 
 h1 {
-    font-size: 2em;
-    color: #66ff66;
-}
-
-#story {
+    font-size: 2rem;
     margin-bottom: 20px;
 }
 
 button {
-    background-color: #444;
+    background-color: #007BFF;
     color: white;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     padding: 10px;
+    margin: 10px;
     border: none;
-    cursor: pointer;
-    margin: 5px;
-    width: 80%;
     border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
 button:hover {
-    background-color: #555;
+    transform: scale(1.1);
+    background-color: #0056b3;
+}
+
+button:active {
+    transform: scale(1);
+}
+
+#story-text {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+#choices-container {
+    margin-top: 20px;
 }
 
 #feedback {
-    font-size: 1.1em;
     margin-top: 20px;
+    font-size: 1.2rem;
+    color: #d9534f;
+}
+
+/* Background images for different scenarios */
+#game-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#forest-bg {
+    background-image: url('forest.jpg');
+}
+
+#river-bg {
+    background-image: url('river.jpg');
+}
+
+#boss-bg {
+    background-image: url('boss.jpg');
+}
+
+/* Styling for input fields */
+input {
+    font-size: 1.2rem;
+    padding: 10px;
+    margin-top: 10px;
+    width: 80%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
