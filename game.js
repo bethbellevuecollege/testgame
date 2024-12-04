@@ -75,14 +75,11 @@ const scenarios = [
 function startGame() {
   playerName = document.getElementById("name-input").value;
   if (playerName !== "") {
-    document.getElementById("name-input").style.display = "none";
-    document.getElementById("story-text").style.display = "block";
-    document.getElementById("choices-container").style.display = "block";
-    document.getElementById("items").style.display = "block";
-    document.getElementById("feedback").style.display = "block";
+    document.getElementById("name-input-container").style.display = "none";
+    document.getElementById("game-container").style.display = "block";
     document.getElementById("end-message").style.display = "none";
-    document.getElementById("name-input").value = ""; // Clear name input field
-
+    document.getElementById("respawn-btn").style.display = "none";
+    
     // Start the first scenario
     showScenario();
   } else {
@@ -96,7 +93,7 @@ function showScenario() {
     const scenario = scenarios[currentScenario];
     document.getElementById("story-text").innerHTML = scenario.question;
     document.getElementById("choices-container").innerHTML = "";
-    
+
     scenario.choices.forEach(choice => {
       const button = document.createElement("button");
       button.innerHTML = choice;
@@ -127,8 +124,8 @@ function checkAnswer(choice, scenario) {
   // If player has no hit points left
   if (hitPoints <= 0) {
     document.getElementById("feedback").innerHTML = "Oh no! You were defeated! Respawn to try again.";
-    document.getElementById("end-message").style.display = "none";
     document.getElementById("respawn-btn").style.display = "inline-block";
+    document.getElementById("game-container").style.display = "none";
   } else {
     showScenario();
   }
@@ -162,15 +159,14 @@ function endGame() {
 }
 
 // Respawn button functionality
-document.getElementById("respawn-btn").addEventListener("click", () => {
+function respawn() {
   hitPoints = 5;
   collectedItems = [];
   currentScenario = 0;
   document.getElementById("respawn-btn").style.display = "none";
-  document.getElementById("story-text").style.display = "block";
-  document.getElementById("choices-container").style.display = "block";
+  document.getElementById("game-container").style.display = "block";
+  document.getElementById("end-message").style.display = "none";
   document.getElementById("feedback").style.display = "block";
   document.getElementById("items").style.display = "block";
-  document.getElementById("end-message").style.display = "none";
   showScenario();
-});
+}
