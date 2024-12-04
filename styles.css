@@ -7,6 +7,13 @@ body {
     background-color: #f4f4f4;
 }
 
+/* Header styling */
+h1 {
+    margin: 20px 0;
+    font-size: 30px;
+    color: #333;
+}
+
 /* Path container (representing the ground/path for the character) */
 #path-container {
     position: relative;
@@ -18,27 +25,77 @@ body {
     overflow: hidden; /* Ensure elements don't overflow the path container */
 }
 
-/* Character style */
+/* Character style (stick figure using CSS) */
 #character {
     position: absolute;
     bottom: 10px;
     left: 0;
     width: 50px;
-    height: 50px;
-    background-color: blue; /* Blue circle representing the character */
-    border-radius: 50%;
+    height: 100px;
     transition: left 1s ease-out; /* Smooth movement of the character */
 }
 
-/* Creature (obstacle) style */
-.creature {
-    position: absolute;
-    bottom: 10px;
-    width: 50px;
-    height: 50px;
-    background-color: red; /* Red circle representing the creature */
+/* Head */
+#character .head {
+    width: 20px;
+    height: 20px;
+    background-color: black;
     border-radius: 50%;
-    transition: opacity 1s ease-out;
+    position: absolute;
+    top: 0;
+    left: 15px;
+}
+
+/* Body */
+#character .body {
+    width: 5px;
+    height: 50px;
+    background-color: black;
+    position: absolute;
+    top: 20px;
+    left: 22px;
+}
+
+/* Arms */
+#character .left-arm, #character .right-arm {
+    width: 30px;
+    height: 5px;
+    background-color: black;
+    position: absolute;
+    top: 30px;
+}
+
+#character .left-arm {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: left center;
+}
+
+#character .right-arm {
+    right: 0;
+    transform: rotate(-45deg);
+    transform-origin: right center;
+}
+
+/* Legs */
+#character .left-leg, #character .right-leg {
+    width: 5px;
+    height: 40px;
+    background-color: black;
+    position: absolute;
+    top: 70px;
+}
+
+#character .left-leg {
+    left: 5px;
+    transform: rotate(45deg);
+    transform-origin: left top;
+}
+
+#character .right-leg {
+    right: 5px;
+    transform: rotate(-45deg);
+    transform-origin: right top;
 }
 
 /* Story text styling */
@@ -63,4 +120,23 @@ body {
 
 .choices-container button:hover {
     background-color: #45a049;
+}
+
+/* Progress bar container */
+#progress-container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #ddd;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Progress bar */
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #4CAF50;
+    border-radius: 10px;
+    transition: width 0.5s ease-out;
 }
